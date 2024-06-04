@@ -6,7 +6,7 @@ import 'package:foodapp/src/features/Data/Repositories/Auth/SignInRepository/sig
 import 'package:foodapp/src/features/Domain/Interfaces/interfaces.dart';
 import 'package:foodapp/src/utils/Helpers/ResultType/result_type.dart';
 
-class DefaultSignInRepository extends SignInRepositorty {
+class DefaultSignInRepository extends SignInRepository {
   //Dependencias
 
   final SignInService _signInService;
@@ -23,7 +23,8 @@ class DefaultSignInRepository extends SignInRepositorty {
       SignInDecodable decodable = SignInDecodable.fromMap(result);
       return Result.success(decodable);
     } on Failure catch (f) {
-      return Result.failure( Failure.getFirebaseAuthErrorMessage(error: f.error));
+      return Result.failure(
+          Failure.getFirebaseAuthErrorMessage(error: f.error));
     }
   }
 }

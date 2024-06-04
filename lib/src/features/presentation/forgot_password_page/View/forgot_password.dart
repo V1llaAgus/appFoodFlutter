@@ -7,9 +7,22 @@ import 'package:foodapp/src/features/presentation/commons_widgets/BackButtons/ba
 
 import 'package:foodapp/src/features/presentation/commons_widgets/Headers/headers_text.dart';
 import 'package:foodapp/src/features/presentation/commons_widgets/Headers/rounded_button.dart';
+import 'package:foodapp/src/features/presentation/forgot_password_page/VielModel/forgot_password_viewmodel.dart';
+import 'package:foodapp/src/features/presentation/forgot_password_page/View/Components/text_formfiel_email.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
+
+  @override
+  State<ForgotPassword> createState() => ForgotPasswordState();
+}
+
+class ForgotPasswordState extends State<ForgotPassword> {
+  //DEPENDENCIAS
+  final ForgotPasswordViewModel _viewModel;
+
+  ForgotPasswordState({ForgotPasswordViewModel? viewModel})
+      : _viewModel = viewModel ?? DefaultForgotPasswordViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +60,12 @@ class ForgotPassword extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontSize: 15.0)),
               ),
-              _emailInput(),
+              TextFormFieldEmailUpdatePassword(viewModel: _viewModel),
               createButton(
                   buttonColor: orange,
                   labelButton: 'Send',
                   shape: const StadiumBorder(),
-                  func: () => _showAlerta(context))
+                  func: () => ctaButtonTapet(context))
             ],
           ),
         ),
@@ -61,33 +74,21 @@ class ForgotPassword extends StatelessWidget {
   }
 }
 
-Widget _emailInput() {
-  return Container(
-    margin: const EdgeInsets.only(top: 40.0),
-    padding: const EdgeInsets.only(left: 20.0),
-    decoration: BoxDecoration(
-        color: const Color.fromRGBO(142, 142, 147, 1.2),
-        borderRadius: BorderRadius.circular(30.0)),
-    child: const TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-          hintText: 'Email',
-          border: OutlineInputBorder(borderSide: BorderSide.none)),
-    ),
-  );
-}
-
-void _showAlerta(BuildContext context) {
-  showAlertDialog(
-      context,
-      const AssetImage('assets/images/lock.png'),
-      'Your password has been reset',
-      "You'll shortly receive an email with a code to setup a new password.",
-      "Done",
-      createButton(
-          buttonColor: orange,
-          labelButton: 'Done',
-          func: () {
-            Navigator.pushNamed(context, 'login');
-          }));
+extension UserActions on ForgotPasswordState {
+  void ctaButtonTapet(BuildContext context) {
+    _viewModel.updatePassword().then((value) {
+      showAlertDialog(
+          context,
+          const AssetImage('assets/images/lock.png'),
+          'Your password has been reset',
+          "You'll shortly receive an email with a code to setup a new password.",
+          "Done",
+          createButton(
+              buttonColor: orange,
+              labelButton: 'Done',
+              func: () {
+                Navigator.pushNamed(context, 'login');
+              }));
+    });
+  }
 }

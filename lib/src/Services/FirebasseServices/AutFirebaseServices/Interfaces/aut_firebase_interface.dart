@@ -40,5 +40,6 @@ abstract class GetUserAuthDataService extends BaseFirebaseService {
   String endpoint = BaseFirebaseService.baseUrl +
       BaseFirebaseService.getUserDatadEndpoint +
       BaseFirebaseService.adminToken;
-  Future<Map<String, dynamic>>  getUserData({required Map<String, dynamic> bodyparameters});
-} 
+  Future<Map<String, dynamic>> getUserData(
+      {required Map<String, dynamic> bodyparameters});
+}

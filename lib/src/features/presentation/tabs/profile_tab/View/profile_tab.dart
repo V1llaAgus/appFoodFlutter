@@ -220,26 +220,24 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
-
-
-  Future _signOut(BuildContext context) async {
+  Future<void> _signOut(BuildContext context) async {
     showAlertDialog(
         context,
-        const AssetImage('assets/images/logout.png'),
-        'Cierre de sesion en curso',
-        '¿Desea salir de la sesion actual?',
+        const AssetImage('assets/logout.png'),
+        'Cierre de sesión en curso',
+        '¿Desea salir de la sesión actual?',
+        'EnableLocation location',
         createButton(
             context: context,
             buttonColor: orange,
-            labelButton: 'Cerrar Sesion',
-            func: (() {
+            labelButton: 'EnableLocation location',
+            func: () {
               _viewModel.signOut().then((_) {
                 Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => WelComePage(),
-                        transitionDuration: Duration(seconds: 0)));
+                        pageBuilder: (_, __, ___) => const WelComePage()));
               });
-            })));
+            }));
   }
 }

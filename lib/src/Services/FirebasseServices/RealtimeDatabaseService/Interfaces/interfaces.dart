@@ -2,7 +2,6 @@ abstract class BaseRealTimeDatabaseService {
   String baseUrl =
       "https://delivery-app-flutter-bbc64-default-rtdb.firebaseio.com/";
   String endUrl = ".json";
-  
 }
 
 abstract class RealtimeDatabaseService extends BaseRealTimeDatabaseService {

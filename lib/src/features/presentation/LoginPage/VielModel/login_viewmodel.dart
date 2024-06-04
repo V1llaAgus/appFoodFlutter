@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/src/Base/ApiService/app_error.dart';
 import 'package:foodapp/src/Base/Constants/local_storage_keys.dart';
+import 'package:foodapp/src/Base/Views/base_view.dart';
+
 import 'package:foodapp/src/features/Domain/UseCases/Auth/SignInUseCase/signin_usecase.dart';
 
 import 'package:foodapp/src/features/Domain/UseCases/Auth/SignInUseCase/signin_usecase_bodyparameters.dart';
@@ -16,18 +18,16 @@ import 'package:foodapp/src/utils/Helpers/ResultType/result_type.dart';
 abstract class LoginViewModelInput {
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
   LoginModel? loginModel = LoginModel(email: '', password: '');
-  late LoadingStateProvider loadingStatusState;
 
-  void initState({required LoadingStateProvider loadingState});
   Future<Result<bool, Failure>> login(
       {required String email, required String password});
   bool isFormValidate();
 }
 
-abstract class LoginVielModel extends LoginViewModelInput
-    with TextFormFieldDelegate {}
+abstract class LoginViewModel extends LoginViewModelInput
+    with TextFormFieldDelegate, BaseViewModel {}
 
-class DefaultLoginViewModel extends LoginVielModel {
+class DefaultLoginViewModel extends LoginViewModel {
   // * Dependencies
   // * UseCases
   final SignInUseCase _signInUseCase;
@@ -43,8 +43,8 @@ class DefaultLoginViewModel extends LoginVielModel {
 
   // * Init State
   @override
-  void initState({required LoadingStateProvider loadingState}) {
-    loadingStatusState = loadingState;
+  void initState({required LoadingStateProvider loadingStateProvider}) {
+    loadingState = loadingStateProvider;
   }
 
   // Utils
@@ -58,7 +58,7 @@ class DefaultLoginViewModel extends LoginVielModel {
   @override
   Future<Result<bool, Failure>> login(
       {required String email, required String password}) {
-    loadingStatusState.setLoadingState(isLoading: true);
+    loadingState.setLoadingState(isLoading: true);
 
     return _signInUseCase
         .execute(
@@ -66,7 +66,7 @@ class DefaultLoginViewModel extends LoginVielModel {
         .then((result) {
       switch (result.status) {
         case ResultStatus.success:
-          loadingStatusState.setLoadingState(isLoading: false);
+          loadingState.setLoadingState(isLoading: false);
           _saveLocalStorageUseCase.execute(
               parameters: SaveLocalStorageParameters(
                   key: LocalStorageKeys.idToken,
@@ -75,7 +75,7 @@ class DefaultLoginViewModel extends LoginVielModel {
           return Result.success(true);
 
         case ResultStatus.error:
-          loadingStatusState.setLoadingState(isLoading: false);
+          loadingState.setLoadingState(isLoading: false);
           return Result.failure(result.error);
       }
     });

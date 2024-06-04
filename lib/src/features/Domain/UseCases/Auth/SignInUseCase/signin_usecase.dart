@@ -1,11 +1,12 @@
-import 'package:foodapp/src/Base/ApiService/app_error.dart';
-import 'package:foodapp/src/Base/Constants/error_message.dart';
-import 'package:foodapp/src/features/Data/Repositories/Auth/SignInRepository/signinbody_repository_parameters.dart';
-import 'package:foodapp/src/features/Data/Repositories/Auth/SignInRepository/sinin_repository.dart';
-import 'package:foodapp/src/features/Domain/Entities/Auth/SignInEntity/signin_entity.dart';
-import 'package:foodapp/src/features/Domain/Interfaces/interfaces.dart';
 import 'package:foodapp/src/features/Domain/UseCases/Auth/SignInUseCase/signin_usecase_bodyparameters.dart';
-import 'package:foodapp/src/utils/Helpers/ResultType/result_type.dart';
+
+import '../../../../../Base/ApiService/app_error.dart';
+import '../../../../../Base/Constants/error_message.dart';
+import '../../../../../utils/Helpers/ResultType/result_type.dart';
+import '../../../../Data/Repositories/Auth/SignInRepository/signinbody_repository_parameters.dart';
+import '../../../../Data/Repositories/Auth/SignInRepository/sinin_repository.dart';
+import '../../../Entities/Auth/SignInEntity/signin_entity.dart';
+import '../../../Interfaces/interfaces.dart';
 
 abstract class SignInUseCase {
   Future<Result<SignInEntity, Failure>> execute(
@@ -14,9 +15,9 @@ abstract class SignInUseCase {
 
 class DefaultSignInUseCase extends SignInUseCase {
   //Dependencias
-  final SignInRepositorty _signInRepositorty;
+  final SignInRepository _signInRepositorty;
 
-  DefaultSignInUseCase({SignInRepositorty? signInRepositorty})
+  DefaultSignInUseCase({SignInRepository? signInRepositorty})
       : _signInRepositorty = signInRepositorty ?? DefaultSignInRepository();
 
   @override

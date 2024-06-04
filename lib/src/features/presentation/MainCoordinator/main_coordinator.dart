@@ -1,43 +1,77 @@
-import 'package:foodapp/src/Base/Constants/local_storage_keys.dart';
-import 'package:foodapp/src/features/Domain/UseCases/LocalStorage/fetchlocal_storageuse_case.dart';
-import 'package:foodapp/src/features/Domain/UseCases/LocalStorage/local_storageuse_caseparameters.dart';
-import 'package:foodapp/src/features/Domain/UseCases/User/ValidateCurrentUserUseCase/validate_current_userusecase.dart';
+import 'package:flutter/material.dart';
+import 'package:foodapp/src/features/presentation/welcome_page/View/welcome_page.dart';
 
-class RoutePath {
-  static String walcomePath = "welcome";
-  static String tabsPath = "Tabs";
+import '../../../Base/Constants/local_storage_keys.dart';
+import '../../Domain/UseCases/LocalStorage/fetchlocal_storageuse_case.dart';
+import '../../Domain/UseCases/LocalStorage/local_storageuse_caseparameters.dart';
+import '../../Domain/UseCases/User/ValidateCurrentUserUseCase/validate_current_userusecase.dart';
+
+class RoutesPaths {
+  static String welcomePath = "welcome";
+  static String loginPath = "login";
+  static String signUpPath = "sign-up";
+  static String tabsPath = "tabs";
 }
 
 class MainCoordinator {
   // Dependencies
   final FetchLocalStorageUseCase _fetchLocalStorageUseCase;
-  final ValidateCurrentUserUserCase _validateCurrentUserCase;
+  final ValidateCurrentUserCase _validateCurrentUserCase;
 
   MainCoordinator(
       {FetchLocalStorageUseCase? fetchLocalStorageUseCase,
-      ValidateCurrentUserUserCase? validateCurrentUserCase})
+      ValidateCurrentUserCase? validateCurrentUserCase})
       : _fetchLocalStorageUseCase =
             fetchLocalStorageUseCase ?? DefaultFetchLocalStorageUseCase(),
         _validateCurrentUserCase =
-            validateCurrentUserCase ?? DefaultValidateCurrentUserUseCase();
+            validateCurrentUserCase ?? DefaultValidateCurrentUserCase();
 
   Future<String?> start() {
     return _isUserLogged().then((value) {
-      return value == null ? RoutePath.walcomePath : RoutePath.tabsPath;
+      if (value != null) {
+        return RoutesPaths.tabsPath;
+      } else {
+        return RoutesPaths.welcomePath;
+      }
     });
   }
 
+  showWelcomePage({required BuildContext context}) {
+    Navigator.pushNamed(context, RoutesPaths.welcomePath);
+  }
+
+  showLoginPage({required BuildContext context}) {
+    Navigator.pushNamed(context, RoutesPaths.loginPath);
+  }
+
+  logoutNavigation({required BuildContext context}) {
+    Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const WelComePage(),
+            transitionDuration: const Duration(seconds: 0)));
+  }
+
+  showSignUpPage({required BuildContext context}) {
+    Navigator.pushNamed(context, RoutesPaths.signUpPath);
+  }
+
+  showTabsPage({required BuildContext context}) {
+    Navigator.pushNamed(context, RoutesPaths.tabsPath);
+  }
+}
+
+extension PrivateMethods on MainCoordinator {
   Future<String?> _isUserLogged() async {
     var idToken = await _fetchLocalStorageUseCase.execute(
-        parameters: FetchLocalStorageParameters(key: LocalStorageKeys.idToken));
+        fetchLocalParameteres:
+            FetchLocalStorageParameters(key: LocalStorageKeys.idToken));
 
-    //REVISAR SI EL USUARIO ESTA GUARDADO
+    // El usuario no está guardado en UserDefaults
     if (idToken == null) {
       return null;
     }
-
-    //Hay un token guardado en la app y vamos a comprobar que el usuario exista aun en firebase
-
+    // El usuario si está guardado en UserDefaults y tenemos que verificar si existe en FB
     var isUserValid = await _validateCurrentUserCase.execute(idToken: idToken);
 
     if (isUserValid) {

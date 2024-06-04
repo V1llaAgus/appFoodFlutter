@@ -198,17 +198,14 @@ Widget _tarjeta(BuildContext context) {
                           fontWeight: FontWeight.w600,
                           fontSize: 13.0)),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    width: 80.0,
-                    height: 18.0,
-                    child: 
-                    createButton(
-                      buttonColor: orange,
-                      labelButton: 'Delivery',
-                      labelFontsize: 11.0,
-
-                    )
-                  )
+                      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                      width: 80.0,
+                      height: 18.0,
+                      child: createButton(
+                        buttonColor: orange,
+                        labelButton: 'Delivery',
+                        labelFontsize: 11.0,
+                      ))
                 ],
               )
             ],

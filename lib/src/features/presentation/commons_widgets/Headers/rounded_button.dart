@@ -10,22 +10,22 @@ Widget createButton({
   double radius = 20.0,
   bool isWithIcon = false,
   ImageProvider<Object>? icon,
-  required String labelButton,
-  Color labelButtonColor = Colors.white,
+  String? labelButton,
+  Color labelColor = Colors.white,
   double labelFontsize = 15.0,
   Color? buttonColor,
-  OutlinedBorder shape = defaultShape, // Usar la nueva constante
+  OutlinedBorder? shape = defaultShape, // Usar la nueva constante
   Function()? func, // Función opcional
 }) {
   return Container(
     width: width,
     height: height,
     margin: const EdgeInsets.only(top: 40.0),
-    child: isWithIcon 
-        ? _raisedButtonWithIcon(radius, icon, labelButton, labelFontsize,
-            labelButtonColor, buttonColor!, shape, func)
-        : _raisedButtonNotIcon(radius, labelButton, labelButtonColor,
-            labelFontsize, buttonColor!, shape, func),
+    child: isWithIcon
+        ? _raisedButtonWithIcon(radius, icon, labelButton ?? "", labelFontsize,
+            labelColor, buttonColor!, shape ?? const StadiumBorder(), func)
+        : _raisedButtonNotIcon(radius, labelButton ?? "", labelColor,
+            labelFontsize, buttonColor!, shape ?? const StadiumBorder(), func),
   );
 }
 

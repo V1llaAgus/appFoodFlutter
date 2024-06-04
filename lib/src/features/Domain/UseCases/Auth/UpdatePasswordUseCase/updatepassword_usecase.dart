@@ -1,21 +1,21 @@
 import 'package:foodapp/src/features/Data/Repositories/Auth/UpdatePassword/updatepassword_repository.dart';
 import 'package:foodapp/src/features/Domain/Interfaces/interfaces.dart';
 
-abstract class UpdatePaswordUseCase {
+abstract class UpdatePasswordUseCase {
   Future<void> execute({required String email});
 }
 
-class DefaultUpdatePasswordUseCase extends UpdatePaswordUseCase {
-  //DEPENDENCIAS
-  UpdatePasswordRepository updatePasswordRepository;
+class DefaultUpdatePasswordUseCase extends UpdatePasswordUseCase {
+  // * Dependencies
+  final UpdatePasswordRepository _updatePasswordRepository;
 
   DefaultUpdatePasswordUseCase(
-      UpdatePasswordRepository? updatePasswordRepository)
-      : updatePasswordRepository =
+      {UpdatePasswordRepository? updatePasswordRepository})
+      : _updatePasswordRepository =
             updatePasswordRepository ?? DefaultUpdatePasswordRepository();
 
   @override
   Future<void> execute({required String email}) {
-    return updatePasswordRepository.updatePassword(email: email);
+    return _updatePasswordRepository.updatePassword(email: email);
   }
 }

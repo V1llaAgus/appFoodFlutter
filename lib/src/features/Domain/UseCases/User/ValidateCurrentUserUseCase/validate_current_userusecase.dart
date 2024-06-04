@@ -1,17 +1,16 @@
-import 'package:foodapp/src/Base/ApiService/app_error.dart';
-import 'package:foodapp/src/features/Data/Decodables/Auth/UserAuthData/userauth_datause_caserepository.dart';
-import 'package:foodapp/src/features/Domain/UseCases/Auth/UserAuthData/userauthdata_usecase.dart';
-
+import '../../../../../Base/ApiService/app_error.dart';
 import '../../../../../utils/Helpers/ResultType/result_type.dart';
+import '../../../../Data/Decodables/Auth/UserAuthData/userauth_datause_caserepository.dart';
+import '../../Auth/UserAuthData/userauthdata_usecase.dart';
 
-abstract class ValidateCurrentUserUserCase {
+abstract class ValidateCurrentUserCase {
   Future<bool> execute({required String idToken});
 }
 
-class DefaultValidateCurrentUserUseCase extends ValidateCurrentUserUserCase {
+class DefaultValidateCurrentUserCase extends ValidateCurrentUserCase {
   final UserAuthDataUseCase _authDataUseCase;
 
-  DefaultValidateCurrentUserUseCase({UserAuthDataUseCase? authDataUseCase})
+  DefaultValidateCurrentUserCase({UserAuthDataUseCase? authDataUseCase})
       : _authDataUseCase = authDataUseCase ?? DefaulUserAuthDataUseCase();
 
   @override

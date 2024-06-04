@@ -29,9 +29,9 @@ class DefaultApiService extends ApiService {
   @override
   Future<Map<String, dynamic>> getDataFromGetRequest(
       {required String url, Map<String, String>? headers}) async {
-    final url0 = Uri.parse(url);
+    final _url = Uri.parse(url);
 
-    final response = await http.get(url0, headers: headers);
+    final response = await http.get(_url, headers: headers);
 
     try {
       if (response.statusCode.toString().contains('20')) {
@@ -85,9 +85,9 @@ class DefaultApiService extends ApiService {
       {required Map<String, dynamic> bodyparameters,
       required String url,
       Map<String, String>? headers}) async {
-    final url0 = Uri.parse(url);
+    final _url = Uri.parse(url);
     final body = json.encode(bodyparameters);
-    final response = await http.put(url0, headers: headers, body: body);
+    final response = await http.put(_url, headers: headers, body: body);
 
     try {
       if (response.statusCode.toString().contains('20')) {

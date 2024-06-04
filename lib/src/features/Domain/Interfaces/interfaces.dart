@@ -1,4 +1,5 @@
-//AUTH REPOSITORIES
+// AUTH REPOSITORIES
+
 import 'package:foodapp/src/Base/ApiService/app_error.dart';
 import 'package:foodapp/src/Services/FirebasseServices/AutFirebaseServices/Decodables/sign_in_decodable.dart';
 import 'package:foodapp/src/Services/FirebasseServices/AutFirebaseServices/Decodables/sign_up_decodable.dart';
@@ -11,13 +12,15 @@ import 'package:foodapp/src/features/Data/Repositories/Auth/UserAuthData/useraut
 import 'package:foodapp/src/features/Data/Repositories/User/userbody_parameters.dart';
 import 'package:foodapp/src/utils/Helpers/ResultType/result_type.dart';
 
-// * User Repositories
+// User Repositories
 abstract class SignUpRepository {
-  Future<Result<SignUpDecodable, Failure>> signUp( {required SignUpRepositoryParameters params});
+  Future<Result<SignUpDecodable, Failure>> signUp(
+      {required SignUpRepositoryParameters params});
 }
 
-abstract class SignInRepositorty {
-  Future<Result<SignInDecodable, Failure>> signIn( {required SignInBodyParameters params});
+abstract class SignInRepository {
+  Future<Result<SignInDecodable, Failure>> signIn(
+      {required SignInBodyParameters params});
 }
 
 abstract class UpdatePasswordRepository {
@@ -30,7 +33,7 @@ abstract class UserAuthDataRepository {
       {required GetUserDataBodyParameters parameters});
 }
 
-//User Data Repositories
+// User Data Repositories
 abstract class SaveUserDataRepository {
   Future<Result<UserDecodable, Failure>> saveUserData(
       {required UserBodyParameters params});
@@ -41,7 +44,7 @@ abstract class FetchUserDataRepository {
       {required String localId});
 }
 
-//LOCAL STORAGE
+// LOCAL STORAGE
 
 abstract class SaveLocalStorageRepository {
   Future<void> saveInLocalStorage({required String key, required String value});

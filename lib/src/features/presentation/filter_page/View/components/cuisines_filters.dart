@@ -68,7 +68,7 @@ Widget _createButtonFilter(Function()? func, bool isActive, String labelText) {
         left: 5, top: 1, right: 10), // Ajusta los márgenes
     child: createButton(
       labelButton: labelText,
-      labelButtonColor: isActive ? orange : gris,
+      labelColor: isActive ? orange : gris,
       func: func as dynamic Function(),
       buttonColor: white,
       shape: RoundedRectangleBorder(

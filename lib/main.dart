@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:foodapp/src/Base/Views/base_view.dart';
-import 'package:foodapp/src/features/presentation/StateProviders/error_state_provider.dart';
-import 'package:foodapp/src/features/presentation/StateProviders/loading_stateprovider.dart';
 import 'package:provider/provider.dart';
 
-// Routes
-import 'package:foodapp/src/routes/routes.dart';
+import 'src/Base/Views/base_view.dart';
+import 'src/colors/colors.dart';
+import 'src/features/presentation/StateProviders/loading_stateprovider.dart';
+import 'src/features/presentation/StateProviders/user_state_provider.dart';
+import 'src/routes/routes.dart';
 
 void main() => runApp(const AppState());
 
@@ -17,8 +17,8 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ErrorStateProvider()),
-        ChangeNotifierProvider(create: (_) => LoadingStateProvider())
+        ChangeNotifierProvider(create: (_) => LoadingStateProvider()),
+        ChangeNotifierProvider(create: (_) => UserStateProvider())
       ],
       child: MyAppUserState(),
     );
@@ -53,6 +53,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: routes,
       initialRoute: _initialRoute,
+      theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: orange,
+          appBarTheme:
+              const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -62,14 +67,6 @@ class MyApp extends StatelessWidget {
         Locale('en', ''), // English, no country code
         Locale('es', ''), // Spanish, no country code
       ],
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-        ),
-      ),
     );
   }
 }

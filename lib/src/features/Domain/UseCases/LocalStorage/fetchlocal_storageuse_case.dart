@@ -1,14 +1,14 @@
-import 'package:foodapp/src/features/Data/Repositories/LocalStorage/fetchlocal_storagerepository.dart';
-import 'package:foodapp/src/features/Domain/Interfaces/interfaces.dart';
 import 'package:foodapp/src/features/Domain/UseCases/LocalStorage/local_storageuse_caseparameters.dart';
 
+import '../../../Data/Repositories/LocalStorage/fetchlocal_storage_repository.dart';
+
 abstract class FetchLocalStorageUseCase {
-  Future<String?> execute({required FetchLocalStorageParameters parameters});
+  Future<String?> execute(
+      {required FetchLocalStorageParameters fetchLocalParameteres});
 }
 
 class DefaultFetchLocalStorageUseCase extends FetchLocalStorageUseCase {
-  //DEPENDENCIAS
-
+  // * Dependencies
   final FetchLocalStorageRepository _fetchLocalStorageRepository;
 
   DefaultFetchLocalStorageUseCase(
@@ -18,8 +18,8 @@ class DefaultFetchLocalStorageUseCase extends FetchLocalStorageUseCase {
 
   @override
   Future<String?> execute(
-      {required FetchLocalStorageParameters parameters}) async {
+      {required FetchLocalStorageParameters fetchLocalParameteres}) async {
     return await _fetchLocalStorageRepository.fetchInLocalStorage(
-        key: parameters.key);
+        key: fetchLocalParameteres.key);
   }
 }

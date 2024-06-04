@@ -37,7 +37,7 @@ void showAlertDialog(
                 height: 130,
               ),
               Container(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: headerText(
                       texto: headerTitle, color: orange, fontSize: 20.0)),
               Padding(
@@ -59,3 +59,5 @@ void showAlertDialog(
     },
   );
 }
+
+

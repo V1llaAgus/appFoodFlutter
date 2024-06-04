@@ -1,31 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:foodapp/src/Base/ApiService/app_error.dart';
-import 'package:foodapp/src/Base/Constants/local_storage_keys.dart';
-import 'package:foodapp/src/features/Domain/UseCases/Auth/SignUpUseCase/signup_use_caseparameters.dart';
-import 'package:foodapp/src/features/Domain/UseCases/Auth/SignUpUseCase/signup_usecase.dart';
-import 'package:foodapp/src/features/Domain/UseCases/LocalStorage/local_storageuse_caseparameters.dart';
-import 'package:foodapp/src/features/Domain/UseCases/LocalStorage/savelocal_storageuse_case.dart';
-import 'package:foodapp/src/features/presentation/StateProviders/loading_stateprovider.dart';
-import 'package:foodapp/src/features/presentation/commons_widgets/TextFormFields/customtext_fotmfield.dart';
-import 'package:foodapp/src/features/presentation/sing_up_page/Model/sign_up_model.dart';
-import 'package:foodapp/src/utils/Helpers/ResultType/result_type.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../../../../Base/ApiService/app_error.dart';
+import '../../../../Base/Constants/local_storage_keys.dart';
+import '../../../../Base/Views/base_view.dart';
+import '../../../../utils/Helpers/ResultType/result_type.dart';
+import '../../../Domain/UseCases/Auth/SignUpUseCase/signup_use_caseparameters.dart';
+import '../../../Domain/UseCases/Auth/SignUpUseCase/signup_usecase.dart';
+import '../../../Domain/UseCases/LocalStorage/local_storageuse_caseparameters.dart';
+import '../../../Domain/UseCases/LocalStorage/savelocal_storageuse_case.dart';
+import '../../StateProviders/loading_stateprovider.dart';
+import '../../commons_widgets/TextFormFields/customtext_fotmfield.dart';
+import '../Model/sign_up_model.dart';
 
 abstract class SignUpViewModelInput {
-  late LoadingStateProvider loadingState;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController dateController;
   late DateTime selectedDate;
 
   SignUpModel? signUpModel = SignUpModel();
 
-  void initState({required LoadingStateProvider loadingStateProvider});
-
   Future<Result<bool, Failure>> signUp();
   bool isFormValidate();
 }
 
 abstract class SignUpViewModel extends SignUpViewModelInput
-    with TextFormFieldDelegate {
+    with TextFormFieldDelegate, BaseViewModel {
   get singUpModel => null;
 }
 

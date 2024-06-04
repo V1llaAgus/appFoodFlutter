@@ -7,19 +7,20 @@ import 'package:foodapp/src/Base/Views/base_view.dart';
 import 'package:foodapp/src/colors/colors.dart';
 import 'package:foodapp/src/features/presentation/LoginPage/VielModel/login_viewmodel.dart';
 import 'package:foodapp/src/features/presentation/StateProviders/loading_stateprovider.dart';
-import 'package:foodapp/src/features/presentation/commons_widgets/BackButtons/back_button.dart';
 import 'package:foodapp/src/features/presentation/commons_widgets/Headers/rounded_button.dart';
 import 'package:foodapp/src/features/presentation/commons_widgets/TextFormFields/customtext_fotmfield.dart';
 import 'package:foodapp/src/utils/Helpers/ResultType/result_type.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../StateProviders/error_state_provider.dart';
+
 //witgets
 
 class LoginPage extends StatelessWidget with BaseView {
-  final LoginVielModel _vielModel;
+  final LoginViewModel _vielModel;
 
-  LoginPage({Key? key, LoginVielModel? vielModel})
+  LoginPage({Key? key, LoginViewModel? vielModel})
       : _vielModel = vielModel ?? DefaultLoginViewModel(),
         super(key: key);
 
@@ -27,12 +28,12 @@ class LoginPage extends StatelessWidget with BaseView {
   Widget build(BuildContext context) {
     //Inicializa viewmodel
     _vielModel.initState(
-        loadingState: Provider.of<LoadingStateProvider>(context));
+        loadingStateProvider: Provider.of<LoadingStateProvider>(context));
 
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.white));
 
-    return _vielModel.loadingStatusState.isLoading
+    return _vielModel.loadingState.isLoading
         ? loadingView
         : Scaffold(
             body: CustomScrollView(
@@ -41,16 +42,13 @@ class LoginPage extends StatelessWidget with BaseView {
                   delegate: SliverChildListDelegate([
                 Column(
                   children: [
-                    Stack(
+                    const Stack(
                       children: [
-                        const Image(
+                        Image(
                             width: double.infinity,
                             height: 350.0,
                             fit: BoxFit.cover,
                             image: AssetImage("assets/images/inicio.jpg")),
-                        Container(
-                            margin: const EdgeInsets.only(top: 50.0),
-                            child: backButton(context, Colors.white))
                       ],
                     ),
                     Transform.translate(
@@ -127,7 +125,7 @@ class LoginPage extends StatelessWidget with BaseView {
                                       GestureDetector(
                                         onTap: () {
                                           Navigator.pushNamed(
-                                              context, 'sing-up');
+                                              context, 'sign-up');
                                         },
                                         child: Container(
                                           margin: const EdgeInsets.symmetric(
@@ -167,12 +165,12 @@ extension UserAction on LoginPage {
         switch (result.status) {
           case ResultStatus.success:
             Navigator.pushNamed(context, 'tabs');
-
             break;
           case ResultStatus.error:
             if (result.error != null) {
-              errorStateProdiver.setFailure(
-                  context: context, value: result.error!);
+              // Corregir el nombre del proveedor de estado de error
+              Provider.of<ErrorStateProvider>(context, listen: false)
+                  .setFailure(context: context, value: result.error!);
             }
             break;
         }

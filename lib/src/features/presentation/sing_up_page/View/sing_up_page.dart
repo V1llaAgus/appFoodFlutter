@@ -128,7 +128,7 @@ extension UserActions on SingUpPage {
       _viewModel.signUp().then((result) {
         switch (result.status) {
           case ResultStatus.success:
-            Navigator.pushNamed(context, "tabs");
+            Navigator.pushNamed(context, "login");
             break;
           case ResultStatus.error:
             errorStateProdiver.setFailure(

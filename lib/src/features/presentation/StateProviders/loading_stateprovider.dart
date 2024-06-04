@@ -6,9 +6,10 @@ abstract class LoadingStateProviderDelegate {
   void setLoadingState({required bool isLoading});
 }
 
-class LoadingStateProvider extends ChangeNotifier with LoadingStateProviderDelegate {
+class LoadingStateProvider extends ChangeNotifier
+    with LoadingStateProviderDelegate {
   @override
-  void setLoadingState({required bool isLoading}) {
+  setLoadingState({required bool isLoading}) {
     this.isLoading = isLoading;
     notifyListeners();
   }
